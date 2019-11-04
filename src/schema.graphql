@@ -1,0 +1,278 @@
+scalar Date
+scalar Time
+scalar DateTime
+scalar JSON
+
+enum UnitType {
+  apartment
+  apartment_building
+  barn
+  boat
+  bnb
+  bnb_unit
+  building
+  bungalow
+  cabin
+  caravan
+  castle
+  chacara
+  chalet
+  chateau
+  condo
+  condo_building
+  condo_hotel
+  condo_hotel_unit
+  cottage
+  estate
+  farmhouse
+  guesthouse
+  hotel
+  hotel_unit
+  house
+  house_boat
+  lodge
+  mas
+  mill
+  mobile_home
+  recreational_vehicle
+  riad
+  room
+  studio
+  townhome
+  villa
+  yacht
+}
+
+enum BathroomType {
+  full
+  half
+  shower
+}
+
+enum BedroomType {
+  bedroom
+  living_sleeping
+  other_sleeping
+}
+
+enum RefundPolicyType {
+  custom
+  no_refund
+  full
+  day7
+  day30
+  day45
+  day60
+  day90
+}
+
+enum AirBnbRefundPolicyType {
+  flexible
+  moderate
+  strict_14_with_grace_period
+  super_strict_30
+  super_strict_60
+}
+
+enum BookingComRefundPolicyType {
+  no_refund
+  full
+  day7
+  day30
+  day42
+  day60
+}
+
+enum HomeawayRefundPolicyType {
+  no_refund
+  relaxed
+  moderate
+  firm
+  strict
+}
+
+interface Identity {
+  id: Int!
+}
+
+interface Unitable {
+  unit: Unit
+}
+
+interface Amenities {
+  amenities: String
+}
+
+type User implements Identity{
+  id: Int!
+  name: String!
+  email: String!
+  avatar: String
+  telephone: String!
+
+  organizations: [Organization!]!
+}
+
+type Organization implements Identity {
+  id: Int!
+  name: String!
+  subdomain: String!
+  tenantDomains: String!
+  description: String
+
+  users: [User!]!
+  brands: [Brand]
+  units: [Unit]
+}
+
+type Unit implements Identity {
+  id: Int!
+  name: String!
+  summaryDescription: String
+  featuresAccommodations: String
+  featuresDining: String
+  featuresEntertainment: String
+  featuresOutdoor: String
+  featuresSpa: String
+  featuresSuitability: String
+  featuresThemes: String
+  numberOfBathrooms: Float!
+  numberOfBedrooms: Int!
+  lounge: Int!
+  numSleep: Int!
+  numSleepInBeds: Int!
+  unitType: UnitType
+
+  checkInInstructions: JSON
+  emergencyContactPhone: String
+  emergencyContactFirstName: String
+  emergencyContactLastName: String
+
+  propertyId: Int!
+  portfolioId: Int!
+  externalId: String!
+  externalContractId: Int
+  airbnbHeadline: String
+  pointcentralCustomerId: String
+
+  active: Boolean!
+  createdAt: DateTime
+  updatedAt: DateTime
+
+  organization: Organization
+  unitPricing: UnitPricing
+  availability: UnitAvailability
+
+  bathrooms: [Bathroom]
+  bedrooms: [Bedroom]
+  images: [UnitImage]
+  listings: [UnitListing]
+  bookings: [Booking]
+
+
+}
+
+type UnitPricing implements Identity {
+  id: Int!
+  defaultNightlyWeekday: Float!
+  discountFullMonth: Float
+  pricingCalendar: String
+  unitListingId: Int!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Bathroom implements Identity, Unitable, Amenities {
+  id: Int!
+  bathroomType: BathroomType!
+  amenities: String
+
+  unit: Unit
+}
+
+type Bedroom implements Identity, Unitable, Amenities {
+  id: Int!
+  bedroomType: BedroomType
+  amenities: String
+
+  unit: Unit
+}
+
+type UnitImage implements Identity, Unitable {
+  id: Int!
+  image: String
+  label: String
+  order: Int
+  height: Int
+  width: Int
+
+  unit: Unit
+}
+
+type UnitListing implements Identity, Unitable {
+  id: Int!
+  currency: String
+  taxRate: Float
+  instantBooking: Boolean
+  refundPolicy: RefundPolicyType
+  refundPolicyCustom: String
+  featured: Boolean
+  enabledHomeAway: Boolean
+  enabledBooking: Boolean
+  enabledAirBnB: Boolean
+  airBnbRefundPolicy: AirBnbRefundPolicyType
+  bookingComRefundPolicy: BookingComRefundPolicyType
+  homeawayRefundPolicy: HomeawayRefundPolicyType
+
+  adjTax: Float
+  maxNightWithTaxRate: Int
+  excludeTax: Boolean
+  taxAdjustable: Boolean
+
+
+
+  brand: Brand
+  unit: Unit
+  unitPricing: UnitPricing
+
+  bookings: [Booking]
+}
+
+type UnitAvailability implements Identity, Unitable {
+  id: Int!
+  defaultAvailabilityChangeover:  JSON
+  defaultStayMax:  Int
+  defaultStayMin:  Int
+  defaultTimeCheckIn:  String
+  defaultTimeCheckOut:  String
+  defaultPriorNotifyMin:  Int
+  availabilityCalendar:  JSON
+  bookingCalendar:  JSON
+  checkInCheckOutPolicy:  String
+
+  unit: Unit
+}
+
+type Booking implements Identity, Unitable {
+  id: Int!
+
+  unit: Unit
+}
+
+type Brand implements Identity {
+  id: Int!
+  name: String
+  description: String
+  currency: Int
+  language: Int
+  taxRate: Float
+  dateFormat: String
+
+  organization: Organization
+  units: [Unit]
+}
+
+type Query {
+  hello(name: String): String
+  units: [Unit]
+}
