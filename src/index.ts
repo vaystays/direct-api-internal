@@ -6,6 +6,8 @@ import {
 } from 'graphql-iso-date'
 import GraphQLJSON from 'graphql-type-json'
 
+import { info } from './config/logging'
+
 const resolvers = {
   Date,
   Time,
@@ -13,8 +15,9 @@ const resolvers = {
   JSON: GraphQLJSON,
 
   Query: {
-    hello: (_, { name }) => {
+    hello: async (_, { name }) => {
       const returnValue = `Hello ${name || 'World!'}`
+      await info(returnValue, { params: { name } })
       return returnValue
     }
   }
@@ -22,7 +25,10 @@ const resolvers = {
 
 const server = new GraphQLServer({
   typeDefs: ['./src/schema.graphql'],
-  resolvers
+  resolvers,
+  // @ts-ignore
+  debug: true,
+  // @ts-ignore
 })
 
 server.start(() => console.log('Server is running on http://localhost:4000'))

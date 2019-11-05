@@ -275,4 +275,6 @@ type Brand implements Identity {
 type Query {
   hello(name: String): String
   units: [Unit]
+
+  me: User
 }
