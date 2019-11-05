@@ -8,7 +8,8 @@
     "test": "npx jest",
     "dev": "npm-run-all --parallel start playground",
     "playground": "npx graphql playground",
-    "dev:faker": "npx graphql-faker ./src/schema.graphql"
+    "dev:faker": "npx graphql-faker ./src/schema.graphql",
+    "deploy": "git push heroku master"
   },
   "keywords": [],
   "author": "Tyler Garlick",
