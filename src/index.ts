@@ -1,9 +1,5 @@
 import { GraphQLServer } from 'graphql-yoga'
-import {
-  GraphQLDate as Date,
-  GraphQLTime as Time,
-  GraphQLDateTime as DateTime
-} from 'graphql-iso-date'
+import { GraphQLDate as Date, GraphQLTime as Time, GraphQLDateTime as DateTime } from 'graphql-iso-date'
 import GraphQLJSON from 'graphql-type-json'
 
 import { info } from './config/logging'
@@ -19,8 +15,8 @@ const resolvers = {
       const returnValue = `Hello ${name || 'World!'}`
       await info(returnValue, { params: { name } })
       return returnValue
-    }
-  }
+    },
+  },
 }
 
 const server = new GraphQLServer({

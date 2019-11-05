@@ -16,6 +16,7 @@ export interface ILog {
   level: LogLevel | string
   message?: string
   body?: object
+  createdAt: Date
 }
 
 export interface ILogResponse {
@@ -42,6 +43,7 @@ export const log = async (message: string, logLevel = LogLevel.info, payload = {
       message,
       level,
       ...payload,
+      createdAt: new Date()
     },
   }
 
