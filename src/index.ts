@@ -1,8 +1,17 @@
-import { GraphQLServer } from 'graphql-yoga'
-import { GraphQLDate as Date, GraphQLTime as Time, GraphQLDateTime as DateTime } from 'graphql-iso-date'
+import {
+  GraphQLServer,
+  Options,
+  OptionsWithHttps
+} from 'graphql-yoga'
+import {
+  GraphQLDate as Date,
+  GraphQLTime as Time,
+  GraphQLDateTime as DateTime
+} from 'graphql-iso-date'
 import GraphQLJSON from 'graphql-type-json'
 
-import { info } from './config/logging'
+import { info, error } from './config/logging'
+import { Props } from 'graphql-yoga/dist/types'
 
 const resolvers = {
   Date,
@@ -19,12 +28,24 @@ const resolvers = {
   },
 }
 
-const server = new GraphQLServer({
+type ServerOptions = Options | OptionsWithHttps | Props<any> | any
+
+const options: ServerOptions = {
+  port: process.env.PORT || 4000,
   typeDefs: ['./src/schema.graphql'],
   resolvers,
-  // @ts-ignore
   debug: true,
-  // @ts-ignore
-})
+  tracing: true,
+  logFunction: message => {
+    console.log(message)
+    info(message.key, message.data)
+  }
+}
 
-server.start(() => console.log('Server is running on http://localhost:4000'))
+const server: GraphQLServer = new GraphQLServer(options)
+
+server.start(() => console.log(`Started: http://localhost:${options.port}`))
+      .catch(err => {
+        console.log(err)
+        return error(err)
+      })

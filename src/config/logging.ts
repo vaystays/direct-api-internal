@@ -10,6 +10,7 @@ export enum LogLevel {
   info,
   warning,
   debug,
+  error
 }
 
 export interface ILog {
@@ -32,6 +33,8 @@ const getLevel = (logLevel: LogLevel) => {
       return 'warning'
     case LogLevel.debug:
       return 'debug'
+    case LogLevel.error:
+      return 'error'
   }
 }
 
@@ -64,3 +67,5 @@ export const info = async (message, additionalInformation = {}) => log(message, 
 export const debug = async (message, additionalInformation = {}) => log(message, LogLevel.debug, additionalInformation)
 
 export const warning = async (message, additionalInformation = {}) => log(message, LogLevel.warning, additionalInformation)
+
+export const error = async (message, additionalInformation = {}) => log(message, LogLevel.error, additionalInformation)
