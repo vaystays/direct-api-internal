@@ -103,7 +103,7 @@ interface Amenities {
   amenities: String
 }
 
-type User implements Identity{
+type User implements Identity {
   id: Int!
   name: String!
   email: String!
@@ -182,7 +182,7 @@ type UnitPricing implements Identity {
   updatedAt: DateTime
 }
 
-type Bathroom implements Identity, Unitable, Amenities {
+type Bathroom implements Identity {
   id: Int!
   bathroomType: BathroomType!
   amenities: String
@@ -190,7 +190,7 @@ type Bathroom implements Identity, Unitable, Amenities {
   unit: Unit
 }
 
-type Bedroom implements Identity, Unitable, Amenities {
+type Bedroom implements Identity {
   id: Int!
   bedroomType: BedroomType
   amenities: String
@@ -198,7 +198,7 @@ type Bedroom implements Identity, Unitable, Amenities {
   unit: Unit
 }
 
-type UnitImage implements Identity, Unitable {
+type UnitImage implements Identity {
   id: Int!
   image: String
   label: String
@@ -209,7 +209,7 @@ type UnitImage implements Identity, Unitable {
   unit: Unit
 }
 
-type UnitListing implements Identity, Unitable {
+type UnitListing implements Identity {
   id: Int!
   currency: String
   taxRate: Float
@@ -238,7 +238,7 @@ type UnitListing implements Identity, Unitable {
   bookings: [Booking]
 }
 
-type UnitAvailability implements Identity, Unitable {
+type UnitAvailability implements Identity {
   id: Int!
   defaultAvailabilityChangeover:  JSON
   defaultStayMax:  Int
@@ -253,7 +253,7 @@ type UnitAvailability implements Identity, Unitable {
   unit: Unit
 }
 
-type Booking implements Identity, Unitable {
+type Booking implements Identity {
   id: Int!
 
   unit: Unit
