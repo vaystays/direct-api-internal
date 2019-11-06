@@ -22,6 +22,8 @@
     "graphql-iso-date": "^3.6.1",
     "graphql-type-json": "^0.3.0",
     "graphql-yoga": "1.18.3",
+    "ky": "^0.15.0",
+    "ky-universal": "^0.3.0",
     "ts-node": "6.2.0",
     "ts-node-dev": "^1.0.0-pre.43",
     "typescript": "^3.6.4"
@@ -33,5 +35,12 @@
     "jest": "^24.9.0",
     "npm-run-all": "4.1.5",
     "ts-jest": "^24.1.0"
+  },
+  "bit": {
+    "env": {
+      "compiler": "bit.envs/compilers/typescript@3.0.35"
+    },
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }

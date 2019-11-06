@@ -12,6 +12,9 @@ import GraphQLJSON from 'graphql-type-json'
 
 import { info, error } from './config/logging'
 import { Props } from 'graphql-yoga/dist/types'
+import { createClient } from './api-client/client'
+import { IContext } from './utils'
+import { getAll } from './services/organizations'
 
 const resolvers = {
   Date,
@@ -20,7 +23,11 @@ const resolvers = {
   JSON: GraphQLJSON,
 
   Query: {
-    hello: async (_, { name }) => {
+    hello: async (_, { name }, context: IContext) => {
+      const response = await getAll(context.client)
+
+      // const response = await context.client.get('https://app.getdirect.io/api/direct_admin/organizations').json()
+      console.log(response)
       const returnValue = `Hello ${name || 'World!'}`
       await info(returnValue, { params: { name } })
       return returnValue
@@ -34,6 +41,17 @@ const options: ServerOptions = {
   port: process.env.PORT || 4000,
   typeDefs: ['./src/schema.graphql'],
   resolvers,
+
+  context(context) {
+    const Authorization = context.request.get('Authorization')
+    if (!Authorization) throw Error(`Not Authorized with: ${Authorization}`)
+
+    const client = createClient(Authorization)
+    return {
+      ...context,
+      client,
+    }
+  },
   debug: true,
   tracing: true,
   logFunction: message => {
