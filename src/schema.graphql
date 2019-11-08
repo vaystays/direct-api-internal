@@ -104,7 +104,7 @@ type User {
 type Organization {
   id: Int!
   name: String
-  subdomain: String
+  subDomain: String
   address: String
   type: String
   user: String
@@ -115,9 +115,9 @@ type Organization {
   totalUnits: Int
   totalUnitListings: Int
   totalBookings: Int
-  confirmed: Boolean
-  onboarded: Boolean
-  active: Boolean
+  isConfirmed: Boolean
+  isOnBoarded: Boolean
+  isActive: Boolean
 }
 
 type Unit {

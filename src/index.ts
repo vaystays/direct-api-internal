@@ -5,7 +5,6 @@ import GraphQLJSON from 'graphql-type-json'
 import { info, error } from './config/logging'
 import { Props } from 'graphql-yoga/dist/types'
 import { createClient } from './api-client/client'
-import { IContext } from './utils'
 
 import { organizations } from './resolvers'
 
