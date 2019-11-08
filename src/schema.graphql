@@ -91,19 +91,7 @@ enum HomeawayRefundPolicyType {
   strict
 }
 
-interface Identity {
-  id: Int!
-}
-
-interface Unitable {
-  unit: Unit
-}
-
-interface Amenities {
-  amenities: String
-}
-
-type User implements Identity {
+type User {
   id: Int!
   name: String!
   email: String!
@@ -113,19 +101,26 @@ type User implements Identity {
   organizations: [Organization!]!
 }
 
-type Organization implements Identity {
+type Organization {
   id: Int!
-  name: String!
-  subdomain: String!
-  tenantDomains: String!
-  description: String
-
-  users: [User!]!
-  brands: [Brand]
-  units: [Unit]
+  name: String
+  subdomain: String
+  address: String
+  type: String
+  user: String
+  createdAt: DateTime
+  totalBrands: Int
+  totalDomains: Int
+  totalProperties: Int
+  totalUnits: Int
+  totalUnitListings: Int
+  totalBookings: Int
+  confirmed: Boolean
+  onboarded: Boolean
+  active: Boolean
 }
 
-type Unit implements Identity {
+type Unit {
   id: Int!
   name: String!
   summaryDescription: String
@@ -168,11 +163,9 @@ type Unit implements Identity {
   images: [UnitImage]
   listings: [UnitListing]
   bookings: [Booking]
-
-
 }
 
-type UnitPricing implements Identity {
+type UnitPricing {
   id: Int!
   defaultNightlyWeekday: Float!
   discountFullMonth: Float
@@ -182,7 +175,7 @@ type UnitPricing implements Identity {
   updatedAt: DateTime
 }
 
-type Bathroom implements Identity {
+type Bathroom {
   id: Int!
   bathroomType: BathroomType!
   amenities: String
@@ -190,7 +183,7 @@ type Bathroom implements Identity {
   unit: Unit
 }
 
-type Bedroom implements Identity {
+type Bedroom {
   id: Int!
   bedroomType: BedroomType
   amenities: String
@@ -198,7 +191,7 @@ type Bedroom implements Identity {
   unit: Unit
 }
 
-type UnitImage implements Identity {
+type UnitImage {
   id: Int!
   image: String
   label: String
@@ -209,7 +202,7 @@ type UnitImage implements Identity {
   unit: Unit
 }
 
-type UnitListing implements Identity {
+type UnitListing {
   id: Int!
   currency: String
   taxRate: Float
@@ -229,8 +222,6 @@ type UnitListing implements Identity {
   excludeTax: Boolean
   taxAdjustable: Boolean
 
-
-
   brand: Brand
   unit: Unit
   unitPricing: UnitPricing
@@ -238,28 +229,28 @@ type UnitListing implements Identity {
   bookings: [Booking]
 }
 
-type UnitAvailability implements Identity {
+type UnitAvailability {
   id: Int!
-  defaultAvailabilityChangeover:  JSON
-  defaultStayMax:  Int
-  defaultStayMin:  Int
-  defaultTimeCheckIn:  String
-  defaultTimeCheckOut:  String
-  defaultPriorNotifyMin:  Int
-  availabilityCalendar:  JSON
-  bookingCalendar:  JSON
-  checkInCheckOutPolicy:  String
+  defaultAvailabilityChangeover: JSON
+  defaultStayMax: Int
+  defaultStayMin: Int
+  defaultTimeCheckIn: String
+  defaultTimeCheckOut: String
+  defaultPriorNotifyMin: Int
+  availabilityCalendar: JSON
+  bookingCalendar: JSON
+  checkInCheckOutPolicy: String
 
   unit: Unit
 }
 
-type Booking implements Identity {
+type Booking {
   id: Int!
 
   unit: Unit
 }
 
-type Brand implements Identity {
+type Brand {
   id: Int!
   name: String
   description: String
@@ -274,6 +265,7 @@ type Brand implements Identity {
 
 type Query {
   hello(name: String): String
+  organizations: [Organization!]!
   units: [Unit]
 
   me: User

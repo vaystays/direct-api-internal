@@ -1,20 +1,15 @@
-import {
-  GraphQLServer,
-  Options,
-  OptionsWithHttps
-} from 'graphql-yoga'
-import {
-  GraphQLDate as Date,
-  GraphQLTime as Time,
-  GraphQLDateTime as DateTime
-} from 'graphql-iso-date'
+import { GraphQLServer, Options, OptionsWithHttps } from 'graphql-yoga'
+import { GraphQLDate as Date, GraphQLTime as Time, GraphQLDateTime as DateTime } from 'graphql-iso-date'
 import GraphQLJSON from 'graphql-type-json'
 
 import { info, error } from './config/logging'
 import { Props } from 'graphql-yoga/dist/types'
 import { createClient } from './api-client/client'
 import { IContext } from './utils'
-import { getAll } from './services/organizations'
+
+import { organizations } from './resolvers'
+
+// await info(returnValue, { params: { name } })
 
 const resolvers = {
   Date,
@@ -23,15 +18,7 @@ const resolvers = {
   JSON: GraphQLJSON,
 
   Query: {
-    hello: async (_, { name }, context: IContext) => {
-      const response = await getAll(context.client)
-
-      // const response = await context.client.get('https://app.getdirect.io/api/direct_admin/organizations').json()
-      console.log(response)
-      const returnValue = `Hello ${name || 'World!'}`
-      await info(returnValue, { params: { name } })
-      return returnValue
-    },
+    organizations,
   },
 }
 
@@ -57,13 +44,14 @@ const options: ServerOptions = {
   logFunction: message => {
     console.log(message)
     info(message.key, message.data)
-  }
+  },
 }
 
 const server: GraphQLServer = new GraphQLServer(options)
 
-server.start(() => console.log(`Started: http://localhost:${options.port}`))
-      .catch(err => {
-        console.log(err)
-        return error(err)
-      })
+server
+  .start(() => console.log(`Started: http://localhost:${options.port}`))
+  .catch(err => {
+    console.log(err)
+    return error(err)
+  })
