@@ -8,7 +8,8 @@ const format = (users = []) =>
             created_at: createdAt,
             confirmed,
             organizations : [{
-                name : orgUrl
+                name : orgName,
+                url: orgUrl
             }]
 // something is not working with organizations for user query 
          }) => ({
@@ -19,6 +20,7 @@ const format = (users = []) =>
              createdAt,
              confirmed,
              organizations:{
+                 orgName,
                  orgUrl
              }
              
