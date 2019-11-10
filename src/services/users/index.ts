@@ -20,8 +20,8 @@ const format = (users = []) =>
              createdAt,
              confirmed,
              organizations:{
-                 orgName,
-                 orgUrl
+                orgName,
+                orgUrl
              }
              
 
