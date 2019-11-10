@@ -97,13 +97,13 @@ type User {
   email: String!
   avatar: String
   telephone: String!
-
-  organizations: [Organization!]!
+  confirmed: Boolean
+  organizations: [Organization]
 }
 
 type Organization {
-  id: Int!
-  name: String
+  id: Int
+  orgName: String
   subDomain: String
   address: String
   type: String
@@ -118,6 +118,8 @@ type Organization {
   isConfirmed: Boolean
   isOnBoarded: Boolean
   isActive: Boolean
+  orgCurrency: String
+  orgUrl: String
 }
 
 type Unit {
@@ -204,7 +206,7 @@ type UnitImage {
 
 type UnitListing {
   id: Int!
-  currency: String
+  listingCurrency: String
   taxRate: Float
   instantBooking: Boolean
   refundPolicy: RefundPolicyType
@@ -216,7 +218,8 @@ type UnitListing {
   airBnbRefundPolicy: AirBnbRefundPolicyType
   bookingComRefundPolicy: BookingComRefundPolicyType
   homeawayRefundPolicy: HomeawayRefundPolicyType
-
+  listingName: String
+  listingUrl: String
   adjTax: Float
   maxNightWithTaxRate: Int
   excludeTax: Boolean
@@ -263,10 +266,36 @@ type Brand {
   units: [Unit]
 }
 
+type Total {
+  startTotal: Float
+  directFee: Float
+  stripeFee: Float
+  orgTotal: Float
+}
+
+type Customer {
+  name: String
+  email: String
+}
+
+type Booking {
+  bookingCode: String
+  url: String
+  checkIn: String
+  checkOut: String
+  totals: [Total]
+  organization: [Organization]
+  listing: [UnitListing]
+  customer: [Customer]
+
+}
+
 type Query {
   hello(name: String): String
   organizations: [Organization!]!
   units: [Unit]
+  bookings: [Booking]
+  users: [User]!
 
   me: User
 }
