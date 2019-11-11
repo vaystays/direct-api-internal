@@ -98,7 +98,12 @@ type User {
   avatar: String
   telephone: String!
   confirmed: Boolean
-  organizations: [Organization]
+  organizations: [UserOrg]
+}
+
+type UserOrg {
+  orgName: String
+  orgUrl: String
 }
 
 type Organization {
@@ -295,7 +300,6 @@ type Query {
   organizations: [Organization!]!
   units: [Unit]
   bookings: [Booking]
-  users: [User]!
-
+  users: [User]
   me: User
 }

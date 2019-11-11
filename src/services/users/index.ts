@@ -1,4 +1,4 @@
-const format = (users = []) => 
+const format = (users = []) =>
     users.map(
         ({
             name,
@@ -7,10 +7,10 @@ const format = (users = []) =>
             telephone,
             created_at: createdAt,
             confirmed,
-            organizations : [{
-                name : orgName,
+            organizations: {
+                name: orgName,
                 url: orgUrl
-            }]
+            }
 // something is not working with organizations for user query 
          }) => ({
              name,
@@ -19,18 +19,16 @@ const format = (users = []) =>
              telephone,
              createdAt,
              confirmed,
-             organizations:{
-                orgName,
-                orgUrl
-             }
-             
-
+             organizations: [{
+                 orgName,
+                 orgUrl
+             }]
          })
     )
 
 
 export const getUsers = async client => {
     const { users = [] } = await client.get('https://staging.getdirect.io/api/direct_admin/users').json()
-    console.log(format(users))
+    console.log(users)
     return format(users)
 }    

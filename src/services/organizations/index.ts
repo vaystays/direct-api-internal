@@ -1,7 +1,7 @@
 const format = (organizations = []) =>
   organizations.map(
     ({
-       name,
+       name: orgName,
        id,
        user,
        created_at: createdAt,
@@ -18,8 +18,9 @@ const format = (organizations = []) =>
        total_bookings: totalBookings,
        active: isActive,
        onboarded: isOnBoarded,
+       url: orgUrl
      }) => ({
-      name,
+      orgName,
       id,
       createdAt,
       type,
@@ -36,6 +37,7 @@ const format = (organizations = []) =>
       totalUnitListings,
       totalBookings,
       user,
+      orgUrl
     }),
   )
 
