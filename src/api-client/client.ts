@@ -7,7 +7,7 @@ export interface IClient {
   del: Function,
 }
 
-export const createClient: IClient | any = (token) => ky.create({
+export const createClient: IClient | any = (token: string) => ky.create({
   credentials: 'omit',
   headers: {
     'Authorization': token,

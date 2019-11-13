@@ -106,6 +106,12 @@ type UserOrg {
   orgUrl: String
 }
 
+type BookingOrganization {
+  name: String
+  currency: String
+  url: String
+}
+
 type Organization {
   id: Int
   orgName: String
@@ -252,11 +258,6 @@ type UnitAvailability {
   unit: Unit
 }
 
-type Booking {
-  id: Int!
-
-  unit: Unit
-}
 
 type Brand {
   id: Int!
@@ -289,7 +290,7 @@ type Booking {
   checkIn: String
   checkOut: String
   totals: [Total]
-  organization: [Organization]
+  organization: [BookingOrganization]
   listing: [UnitListing]
   customer: [Customer]
 
@@ -298,6 +299,7 @@ type Booking {
 type Query {
   hello(name: String): String
   organizations: [Organization!]!
+  organization(id: Int!): Organization
   units: [Unit]
   bookings: [Booking]
   users: [User]
