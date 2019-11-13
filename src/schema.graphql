@@ -98,7 +98,7 @@ type User {
   avatar: String
   telephone: String!
   confirmed: Boolean
-  organizations: [UserOrg]
+  organizations: JSON
 }
 
 type UserOrg {
@@ -295,6 +295,18 @@ type Booking {
 
 }
 
+type Employee {
+  name: String
+  id: Int
+  email: String
+  margin: String
+  name: String
+  organizationId: Int
+  role: String
+  team: String
+  payoutFrequency: String
+}
+
 type Query {
   hello(name: String): String
   organizations: [Organization!]!
@@ -302,4 +314,5 @@ type Query {
   bookings: [Booking]
   users: [User]
   me: User
+  employees: [Employee]
 }

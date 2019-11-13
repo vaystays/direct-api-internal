@@ -8,6 +8,7 @@ import { createClient } from './api-client/client'
 import { organizations } from './resolvers'
 import { bookings } from './resolvers'
 import { users } from './resolvers'
+import { employees } from './resolvers'
 
 // await info(returnValue, { params: { name } })
 
@@ -20,7 +21,8 @@ const resolvers = {
   Query: {
     organizations,
     bookings,
-    users
+    users,
+    employees
     
   },
 }
