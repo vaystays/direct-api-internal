@@ -301,7 +301,6 @@ type Employee {
   id: Int
   email: String
   margin: String
-  name: String
   organizationId: Int
   role: String
   team: String
