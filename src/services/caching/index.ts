@@ -1,8 +1,9 @@
 import Redis from 'ioredis'
+import { REDIS_URL } from '../../config/env'
 
-const redis = new Redis()
+const redis = new Redis(REDIS_URL)
 
-const ONE_HOUR = 60 * 60 * 1000
+export const ONE_HOUR = 60 * 60 * 1000
 
 export interface SaveOptions {
   shouldCache: boolean
@@ -17,6 +18,7 @@ const save = async (
     shouldCache: true
   }) => {
   const result = await redis.hmset(key, value)
+  console.log(result)
   if (options.shouldCache)
     await expiresIn(key, options.expiresInSeconds)
   return {

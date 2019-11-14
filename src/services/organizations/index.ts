@@ -1,3 +1,11 @@
+import { organizationsUrl } from '../../config/urls'
+import {
+  exists,
+  findByKey,
+  save
+} from '../caching'
+import crypto from 'crypto'
+
 const format = (organizations = []) => organizations.map(formatOne)
 
 const formatOne =
@@ -42,6 +50,31 @@ const formatOne =
   })
 
 export const getOrganizations = async client => {
-  const { organizations = [] } = await client.get('https://app.getdirect.io/api/direct_admin/organizations').json()
-  return format(organizations)
+  console.log(organizationsUrl)
+
+  const hashedUrl = crypto.createHash('md5').digest('base64')
+  const key = `url:${hashedUrl}`
+  console.log('Hashed Key', key)
+  const isCached = await exists(key)
+  if (isCached) {
+    const { response } = await findByKey(key)
+    const formatted = JSON.parse(response)
+    console.log(`Result from cache`, formatted)
+
+    return formatted
+  }
+
+  const { organizations = [] } = await client.get(organizationsUrl).json()
+
+  const formatted = format(organizations)
+  console.log(formatted)
+
+  try {
+    await save(key, { response: JSON.stringify(formatted) })
+    console.log(`Saved to cache`)
+  } catch (ex) {
+    console.error(ex)
+  }
+
+  return formatted
 }
