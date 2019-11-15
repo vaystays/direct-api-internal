@@ -49,19 +49,21 @@ const formatOne =
     orgUrl
   })
 
-export const getOrganizations = async client => {
-  console.log(organizationsUrl)
+export const getOrganizations = async (client, ignoreCaching) => {
 
   const hashedUrl = crypto.createHash('md5').digest('base64')
   const key = `url:${hashedUrl}`
-  console.log('Hashed Key', key)
-  const isCached = await exists(key)
-  if (isCached) {
-    const { response } = await findByKey(key)
-    const formatted = JSON.parse(response)
-    console.log(`Result from cache`, formatted)
 
-    return formatted
+  if (!ignoreCaching) {
+    console.log('Cache is being ignored')
+    const isCached = await exists(key)
+    if (isCached) {
+      const { response } = await findByKey(key)
+      const formatted = JSON.parse(response)
+      console.log(`Result from cache`, formatted)
+
+      return formatted
+    }
   }
 
   const { organizations = [] } = await client.get(organizationsUrl).json()
