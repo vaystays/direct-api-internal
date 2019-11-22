@@ -381,6 +381,14 @@ type Property {
   unlistedBrands: JSON
 }
 
+type InactiveProperty {
+  id: Int
+  active: Boolean
+  name: String
+  propertyType: String
+  units: JSON
+}
+
 type Employee {
   name: String
   id: Int
