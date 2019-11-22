@@ -2,8 +2,10 @@ import { Client, ClientOptions, RequestParams } from '@elastic/elasticsearch'
 import { NODE_URL as node } from './env'
 
 const options: ClientOptions = {
-  node,
+  node: 'https://search-direct-logs-ee6xzcyio6c5qy5wdjiwz7mo7q.us-west-1.es.amazonaws.com',
+
 }
+
 export const client: Client = new Client(options)
 
 export enum LogLevel {

@@ -179,7 +179,7 @@ type Unit {
   bedrooms: [Bedroom]
   images: [UnitImage]
   listings: [UnitListing]
-  bookings: [Booking]
+  upcomingBookings: [UpcomingBooking]
 }
 
 type UnitPricing {
@@ -244,7 +244,7 @@ type UnitListing {
   unit: Unit
   unitPricing: UnitPricing
 
-  bookings: [Booking]
+  upcomingBookings: [UpcomingBooking]
 }
 
 type UnitAvailability {
@@ -272,7 +272,7 @@ type Brand {
   taxRate: Float
   dateFormat: String
 
-  organization: Organization
+  organization: [Organization]
   units: [Unit]
 }
 
@@ -288,7 +288,7 @@ type Customer {
   email: String
 }
 
-type Booking {
+type UpcomingBooking {
   bookingCode: String
   url: String
   checkIn: String
@@ -311,13 +311,22 @@ type Employee {
   payoutFrequency: String
 }
 
+type InactiveProperty {
+  id: Int
+  active: Boolean
+  name: String
+  propertyType: String
+  units: JSON
+}
+
 type Query {
   hello(name: String): String
   organizations(options: SearchOptions): [Organization!]!
   organization(id: Int!): Organization
   units: [Unit]
-  bookings: [Booking]
+  upcomingBookings: [UpcomingBooking]
   users: [User]
   me: User
-  employees: [Employee]
+  employees(id: Int!): [Employee]
+  inactiveProperties(id: Int!): [InactiveProperty]
 }
