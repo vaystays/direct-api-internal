@@ -9,6 +9,9 @@ import { organizations } from './resolvers'
 import { bookings } from './resolvers'
 import { users } from './resolvers'
 import { employees } from './resolvers'
+import { property } from './resolvers'
+import {unit } from './resolvers'
+
 
 // await info(returnValue, { params: { name } })
 
@@ -20,11 +23,14 @@ const resolvers = {
 
   Query: {
     organizations,
+    property,
     bookings,
     users,
-    employees
+    employees,
+    unit
     
   },
+
 }
 
 type ServerOptions = Options | OptionsWithHttps | Props<any> | any
@@ -33,7 +39,7 @@ const options: ServerOptions = {
   port: process.env.PORT || 4000,
   typeDefs: ['./src/schema.graphql'],
   resolvers,
-
+  playground: '/',
   context(context) {
     const Authorization = context.request.get('Authorization')
     if (!Authorization) throw Error(`Not Authorized with: ${Authorization}`)
@@ -54,7 +60,7 @@ const options: ServerOptions = {
 
 const server: GraphQLServer = new GraphQLServer(options)
 
-server
+export default server
   .start(() => console.log(`Started: http://localhost:${options.port}`))
   .catch(err => {
     console.log(err)

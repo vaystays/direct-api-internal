@@ -90,6 +90,22 @@ enum HomeawayRefundPolicyType {
   firm
   strict
 }
+type Location {
+   id: Int
+   adrStreet: String
+   adrUnit: String
+   adrCity: String
+   adrState: String
+   adrCountry: String
+   adrPostalCode: String
+   geoLatitude: Float
+   geoLongitude: Float
+   locationableType: String
+   locationableId: Int
+   createdAt: DateTime
+   updatedAt: DateTime
+   organizationId: String
+}
 
 input SearchOptions {
   ignoreCache: Boolean
@@ -138,48 +154,16 @@ type Organization {
 }
 
 type Unit {
-  id: Int!
-  name: String!
+  id: Int
+  name: String
   summaryDescription: String
-  featuresAccommodations: String
-  featuresDining: String
-  featuresEntertainment: String
-  featuresOutdoor: String
-  featuresSpa: String
-  featuresSuitability: String
-  featuresThemes: String
-  numberOfBathrooms: Float!
-  numberOfBedrooms: Int!
-  lounge: Int!
-  numSleep: Int!
-  numSleepInBeds: Int!
-  unitType: UnitType
-
-  checkInInstructions: JSON
-  emergencyContactPhone: String
-  emergencyContactFirstName: String
-  emergencyContactLastName: String
-
-  propertyId: Int!
-  portfolioId: Int!
-  externalId: String!
-  externalContractId: Int
-  airbnbHeadline: String
-  pointcentralCustomerId: String
-
-  active: Boolean!
-  createdAt: DateTime
-  updatedAt: DateTime
-
-  organization: Organization
-  unitPricing: UnitPricing
-  availability: UnitAvailability
-
-  bathrooms: [Bathroom]
-  bedrooms: [Bedroom]
-  images: [UnitImage]
-  listings: [UnitListing]
-  bookings: [Booking]
+  featuresAccommodations: JSON
+  featuresAmenities: JSON
+  featuresDining: JSON
+  featuresEntertainment: JSON
+  featuresOutdoor: JSON
+  featuresSpa: JSON
+  
 }
 
 type UnitPricing {
@@ -195,17 +179,13 @@ type UnitPricing {
 type Bathroom {
   id: Int!
   bathroomType: BathroomType!
-  amenities: String
-
-  unit: Unit
+  amenities: JSON
 }
 
 type Bedroom {
   id: Int!
   bedroomType: BedroomType
-  amenities: String
-
-  unit: Unit
+  amenities: JSON
 }
 
 type UnitImage {
@@ -299,6 +279,67 @@ type Booking {
   customer: [Customer]
 
 }
+type Property {
+  id: Int
+  name: String
+  actiive: Boolean
+  multiUnit: Boolean
+  summaryAccommodations: String
+  summaryDescription: String
+  summaryHeadline: String
+  summaryRules: String
+  featuresAdventure: JSON
+  featuresAttractions: JSON
+  featuresCar: JSON
+  featuresLeisure: JSON
+  featuresLocal: JSON
+  featuresLocation: JSON
+  propertyType: String
+  organizationId: Int
+  createdAt: DateTime
+  updatedAt: DateTime
+  managerInfoVisible: Boolean
+  registrationId: String
+  externalId: String
+  extra: JSON
+  location: Location
+  imagesProperty: JSON
+  attachedFiles: JSON
+  distributionRequiredAmenities: [String]
+  isIncomplete: Boolean
+  bookings: [Booking]
+  bookingsUpcoming: [Booking]
+  bookingsWithUnpaid:[Booking]
+  brands: String
+  googleMapsApiKey: Float
+  incompleteProperties: String
+  listings: String
+  defaultListing: JSON
+  notifications: String
+  pages: String
+  PropertyCount: Int
+  properties: String
+  recentBookings: String
+  stripeConnectAccount: String
+  stripeConnectKey: String
+  units: [Unit]
+  bathrooms: [Bathroom] 
+  bedrooms: [Bedroom]
+  featuresAccommodations: JSON
+  featuresAmenities: JSON
+  featuresDining: JSON
+  featuresEntertainment: JSON
+  featuresOutdoor: JSON
+  featuresSpa: JSON
+  featuresSuitability: JSON
+  featuresThemes: JSON
+  imagesUnit: UnitImage
+  available30Days: Boolean
+  unitAvailability: UnitAvailability
+  availabilityCalendar: JSON
+  defaultAvailabilityChangeover: JSON
+  unlistedBrands: JSON
+}
 
 type Employee {
   name: String
@@ -318,6 +359,8 @@ type Query {
   units: [Unit]
   bookings: [Booking]
   users: [User]
+  property(organizationId: Int!,id: Int!): Property
   me: User
-  employees: [Employee]
+  employees(organizationId: Int!): [Employee]
+  unit(organizationId: Int!)
 }
