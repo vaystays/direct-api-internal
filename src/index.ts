@@ -6,13 +6,9 @@ import { info, error } from './config/logging'
 import { Props } from 'graphql-yoga/dist/types'
 import { createClient } from './api-client/client'
 import { organizations } from './resolvers'
-import { upcomingBookings } from './resolvers'
 import { users } from './resolvers'
 import { employees } from './resolvers'
-import { inactiveProperties} from './resolvers'
-import { property } from './resolvers'
-import {unit } from './resolvers'
-
+import { upcomingBookings } from './resolvers'
 
 // await info(returnValue, { params: { name } })
 
@@ -24,12 +20,9 @@ const resolvers = {
 
   Query: {
     organizations,
-    upcomingBookings,
     users,
     employees,
-    inactiveProperties,
-    property,
-    unit
+    upcomingBookings
     
   },
 

@@ -203,6 +203,7 @@ type Unit {
   featuresOutdoor: JSON
   featuresSpa: JSON
   
+  bookings: [Booking]
 }
 
 type UnitPricing {
@@ -263,7 +264,7 @@ type UnitListing {
   unit: Unit
   unitPricing: UnitPricing
 
-  upcomingBookings: [UpcomingBooking]
+  bookings: [Booking]
 }
 
 type UnitAvailability {
@@ -291,7 +292,7 @@ type Brand {
   taxRate: Float
   dateFormat: String
 
-  organization: [Organization]
+  organization: Organization
   units: [Unit]
 }
 
@@ -307,7 +308,7 @@ type Customer {
   email: String
 }
 
-type UpcomingBooking {
+type Booking {
   bookingCode: String
   url: String
   checkIn: String
@@ -391,24 +392,17 @@ type Employee {
   payoutFrequency: String
 }
 
-type InactiveProperty {
-  id: Int
-  active: Boolean
-  name: String
-  propertyType: String
-  units: JSON
-}
-
 type Query {
   hello(name: String): String
   organizations(options: SearchOptions): [Organization!]!
   organization(id: Int!): Organization
   units: [Unit]
-  upcomingBookings: [UpcomingBooking]
+  bookings: [Booking]
   users: [User]
   property(organizationId: Int!,id: Int!): Property
   me: User
   inactiveProperties(id: Int!): [InactiveProperty]
   employees(organizationId: Int!): [Employee]
-  unit(organizationId: Int!)
+  unit(organizationId: Int!): [Unit]
+
 }
