@@ -6,6 +6,7 @@ import { getEmployees } from '../services/employess'
 import { getInactiveProperties} from '../services/inactiveProperties'
 import { getProperty } from '../services/property'
 import { getUnit } from '../services/unit'
+import { getBookings } from '../services/bookings'
 
 
 export const organizations = async (_, { options }, context: IContext) => await getOrganizations(context.client, options && options.ignoreCache)
@@ -15,3 +16,4 @@ export const employees = async (organizationId, params, context: IContext) => aw
 export const inactiveProperties = async (organizationId, params, context: IContext) => await getInactiveProperties(context.client, organizationId)
 export const property = async (_, params, context: IContext) => await getProperty(context.client, params.organizationId,params.id)
 export const unit = async (_, params, context: IContext) => await getUnit(context.client, params.organizationId,params.id)
+export const bookings = async (_, params, context: IContext) => await getBookings(context.client, params.organizationId, params.bookingCode)

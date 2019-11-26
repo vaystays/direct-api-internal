@@ -157,13 +157,13 @@ type Unit {
   id: Int
   name: String
   summaryDescription: String
-  featuresAccommodations: String
-  featuresDining: String
-  featuresEntertainment: String
-  featuresOutdoor: String
-  featuresSpa: String
-  featuresSuitability: String
-  featuresThemes: String
+  # featuresAccommodations: JSON
+  # featuresDining: String
+  # featuresEntertainment: String
+  # featuresOutdoor: String
+  # featuresSpa: String
+  # featuresSuitability: String
+  # featuresThemes: String
   numberOfBathrooms: Float!
   numberOfBedrooms: Int!
   lounge: Int!
@@ -318,6 +318,88 @@ type UpcomingBooking {
   customer: [Customer]
 
 }
+
+type Booking {
+  bookings: JSON
+  brands: JSON
+  channels: JSON
+  listings: JSON
+  view: String
+  charges: JSON
+  jsonCharges: JSON
+  refunds: JSON
+  customer: JSON
+  guestContact: JSON
+  listing: JSON
+  organization: JSON
+  currentEmployeeRole: String
+  stripePublishableKey: String
+
+  booking: JSON
+  bookingChannelLogo: String
+  bookingChannelName: String
+  stripeAccountId: JSON #could be int or string my data source said null
+  deposits: JSON
+  priceStatus: String
+  cancelledRefundStatus: String
+  unit: [Unit]
+
+  property: JSON
+  location: JSON
+  securityDepositCollected: Boolean
+  workOrders: JSON
+  quote: JSON
+  roomRate: Int
+
+  specialGuestFeeRate: Int
+  specialGuestFeeAmount: Int
+
+  managementFeeRate: Int
+  managementFeeAmount: Int
+  totalManagementFees: Int
+  fees: JSON
+  feesTotal: Float 
+
+  propertyOwnerNet: Float
+  propertyOwnerRate: Float
+
+  houseKeepingRate: Float
+  houseKeepingNet: Float
+
+  channelInflatorAmount: Int
+  channelInflatorRate: Int 
+  channelFeeAmount: Float
+  channelFeeRate: Float
+
+  organizationNet: Float
+  avgRoomRate: Float
+  billableRange: Int
+
+  losDiscountType: String
+  losDiscountRate: JSON
+  losDiscountAmount: Float
+
+  taxRate: Float
+  taxAmount: Float
+  bookingTotal: Float
+  directFee: Float
+  directFeeRate: Float
+  totalSystemFees: Float
+
+  stripeFee: Float
+  stripePayout: Float
+  
+  totalPayout: Float
+  propertyOwnerSubtotal: Float
+  netBeforeFees: Float
+  source: String
+  bookingNetDetail: JSON
+  loading: Boolean
+
+
+}
+
+
 type Property {
   id: Int
   name: String
@@ -410,5 +492,6 @@ type Query {
   me: User
   inactiveProperties(id: Int!): [InactiveProperty]
   employees(organizationId: Int!): [Employee]
-  unit(organizationId: Int!)
+  unit(organizationId: Int!): [Unit]
+  bookings(organizationId: Int, bookingCode: String): [Booking]
 }
