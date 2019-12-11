@@ -132,8 +132,10 @@ const format = (bookings = []) => bookings.map(
 )
 
 export const getBookings = async(client, organizationId: number, bookingCode: string) => {
+  console.log(organizationId)
+  console.log(bookingCode)
 
-    const { bookings = []} = await client.get(`https://app.getdirect.io/api/${organizationId}/bookings/${bookingCode}`).json()
-
-    return format(bookings)
+    const response = await client.get(`https://app.getdirect.io/api/32/bookings/ONA73RJQSE2MUQYQ`).json()
+    console.log(response)
+    return format(response.bookings)
 }

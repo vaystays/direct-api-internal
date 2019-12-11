@@ -164,9 +164,9 @@ type Unit {
   # featuresSpa: String
   # featuresSuitability: String
   # featuresThemes: String
-  numberOfBathrooms: Float!
-  numberOfBedrooms: Int!
-  lounge: Int!
+  # numberOfBathrooms: Float!
+  # numberOfBedrooms: Int!
+  # lounge: Int!
   numSleep: Int!
   numSleepInBeds: Int!
   unitType: UnitType
@@ -182,6 +182,8 @@ type Unit {
   externalContractId: Int
   airbnbHeadline: String
   pointcentralCustomerId: String
+  subportfolioId: Int
+  unitGroupId: Int
 
   active: Boolean!
   createdAt: DateTime
@@ -196,12 +198,20 @@ type Unit {
   images: [UnitImage]
   listings: [UnitListing]
   upcomingBookings: [UpcomingBooking]
+  
   featuresAccommodations: JSON
   featuresAmenities: JSON
   featuresDining: JSON
   featuresEntertainment: JSON
   featuresOutdoor: JSON
   featuresSpa: JSON
+  featuresSuitability: JSON
+  featuresThemes: JSON
+  numBathrooms: Float
+  numBedooms: Float,
+  numLounge: Float,
+  extra: JSON
+
   
 }
 
@@ -403,7 +413,7 @@ type Booking {
 type Property {
   id: Int
   name: String
-  actiive: Boolean
+  active: Boolean
   multiUnit: Boolean
   summaryAccommodations: String
   summaryDescription: String
@@ -471,6 +481,7 @@ type Employee {
   role: String
   team: String
   payoutFrequency: String
+  isConfirmed: Boolean
 }
 
 type InactiveProperty {
@@ -485,13 +496,13 @@ type Query {
   hello(name: String): String
   organizations(options: SearchOptions): [Organization!]!
   organization(id: Int!): Organization
-  units: [Unit]
+  units(organizationId: Int, id: Int): [Unit]
   upcomingBookings: [UpcomingBooking]
   users: [User]
-  property(organizationId: Int!,id: Int!): Property
+  property(organizationId: Int!,id: Int!): [Property]
   me: User
-  inactiveProperties(id: Int!): [InactiveProperty]
+  inactiveProperties(organizationId: Int!): [InactiveProperty]
   employees(organizationId: Int!): [Employee]
-  unit(organizationId: Int!): [Unit]
+  unit(organizationId: Int!, id: Int): Unit
   bookings(organizationId: Int, bookingCode: String): [Booking]
 }
