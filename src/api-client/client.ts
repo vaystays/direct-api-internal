@@ -11,7 +11,10 @@ export const createClient: IClient | any = (token: string) => ky.create({
   credentials: 'omit',
   headers: {
     'Authorization': token,
-    'Content-Type': 'application/json',
-    'Accept': 'application/vnd.direct.v1',
+    'Content-Type': 'application/json'
+  },
+  timeout:false,
+  retry: {
+    limit: 10
   }
 })

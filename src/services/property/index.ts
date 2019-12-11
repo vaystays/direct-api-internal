@@ -70,6 +70,7 @@ const formatOne = ({
     summaryAccommodations,
     summaryDescription,
     summaryHeadline,
+    summaryRules,
     featuresAdventure,
     featuresAttractions,
     featuresCar,
@@ -130,7 +131,7 @@ const formatOne = ({
 // // means I have not mapped it correctly so hopefully youll be able to re format the type and format it correctly.
 
 export const getProperty = async (client, organizationId: number, id: number) => {
-    const property = await client.get(`https://app.getdirect.io/api/${organizationId}/properties/${id}`).json()
+    const {property = []} = await client.get(`https://app.getdirect.io/api/${organizationId}/properties/${id}`).json()
     console.log(property)
   
     return formatOne(property)

@@ -12,6 +12,7 @@ import { employees } from './resolvers'
 import { inactiveProperties} from './resolvers'
 import { property } from './resolvers'
 import {unit } from './resolvers'
+import { bookings } from './resolvers'
 
 
 // await info(returnValue, { params: { name } })
@@ -29,7 +30,8 @@ const resolvers = {
     employees,
     inactiveProperties,
     property,
-    unit
+    unit,
+    bookings
     
   },
 
